@@ -45,7 +45,7 @@ app.get('/weather',async(req,res)=>{
                     date
                     
             })
-            $('.allergy').each((i)=>{
+            $('.allergy').each(async(i)=>{
                 const allergy_name = $('.allergy-name').eq(i).text()
                 const allergy_value = $('.allergy-value').eq(i).text()
                 const allergy_image = "https://www.accuweather.com"+$('.allergy-icon').eq(i).attr('src')
@@ -55,7 +55,7 @@ app.get('/weather',async(req,res)=>{
                         allergy_image
                 }) 
             })
-            $('.weather-card').each((i)=>{
+            $('.weather-card').each(async(i)=>{
                 const cardtitle = $('.card-header').children('h2').eq(i).text().replace('\n\t\t\t','').replace('\n\t\t\t','')
                 const cardimage = "https://www.accuweather.com"+$('.forecast-container').children('.icon-weather').eq(i).attr('src')
                 const cardtemp = $('.temp-container').children('.temp').eq(i).text()
@@ -103,7 +103,7 @@ app.get('/pollutants',async(req,res)=>{
             const html = response.data
             const $ = cheerio.load(html)
 
-            deleteInfo(information)
+        
 
             $('.display-type',html).each(function(i){
                 const title = $(this).text().replace('\n\t\t\t','').replace('\n\t\t','')
@@ -137,7 +137,7 @@ app.get('/pollutants',async(req,res)=>{
         .then(response =>{
             const html = response.data
             const $ = cheerio.load(html)
-            deleteInfo(information)
+            
             $('.date').each((i)=>{
                 const time = $('.date').children('span').eq(i*2).text()
                 const date =$('.date').children('span').eq((i*2)-1).text().replace('\n\t\t\t','').replace('\n\t\t','')
@@ -181,7 +181,7 @@ app.get('/pollutants',async(req,res)=>{
  app.get('/dailyweather',async (req,res)=>{
     axios.get("https://www.accuweather.com/en/bd/dhaka/28143/daily-weather-forecast/28143")
         .then(response =>{
-            deleteInfo(details)
+            
             const html = response.data
             const $ = cheerio.load(html)
             const title=$('.content-module').children('.module-title').text()
