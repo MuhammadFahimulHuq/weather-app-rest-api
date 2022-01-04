@@ -20,9 +20,9 @@ app.get('/',(req,res)=>{
     res.json("Welcome to weather app")
 })
 const address = "https://www.accuweather.com/en/bd/dhaka/28143/weather-forecast/28143"
-app.get('/weather',(req,res)=>{
+app.get('/weather',async(req,res)=>{
     axios.get(address)
-        .then(async response =>{
+        .then(response =>{
             const html = response.data
             const $ = cheerio.load(html)
             const temp = $('.temp',html).text().slice(0,4)
@@ -35,7 +35,7 @@ app.get('/weather',(req,res)=>{
             
             deleteInfo(information)
         
-            await information.push({
+            information.push({
                     title,
                     temp,
                     time,
@@ -45,34 +45,34 @@ app.get('/weather',(req,res)=>{
                     date
                     
             })
-            $('.allergy').each(async (i)=>{
+            $('.allergy').each((i)=>{
                 const allergy_name = $('.allergy-name').eq(i).text()
                 const allergy_value = $('.allergy-value').eq(i).text()
                 const allergy_image = "https://www.accuweather.com"+$('.allergy-icon').eq(i).attr('src')
-               await information.push({
+                information.push({
                         allergy_name,
                         allergy_value,
                         allergy_image
                 }) 
             })
-            $('.weather-card').each(async (i)=>{
+            $('.weather-card').each((i)=>{
                 const cardtitle = $('.card-header').children('h2').eq(i).text().replace('\n\t\t\t','').replace('\n\t\t\t','')
                 const cardimage = "https://www.accuweather.com"+$('.forecast-container').children('.icon-weather').eq(i).attr('src')
                 const cardtemp = $('.temp-container').children('.temp').eq(i).text()
                 const cardtempphrase= $('.card-content').children('.phrase').eq(i).text()
-                await information.push({
+                information.push({
                     cardtitle,
                     cardimage,
                     cardtemp,
                     cardtempphrase
                 })
             })
-            return await res.json(information)
+            res.json(information)
         }).catch(error =>{
             console.log(error)
         })
 })
-app.get('/currentairquality',(req,res)=>{
+app.get('/currentairquality',async(req,res)=>{
     axios.get("https://www.accuweather.com/en/bd/dhaka/28143/air-quality-index/28143")
         .then(response =>{
             const html = response.data
@@ -94,7 +94,7 @@ app.get('/currentairquality',(req,res)=>{
         console.log(error)
     })
 })
-app.get('/pollutants',(req,res)=>{
+app.get('/pollutants',async(req,res)=>{
     axios.get("https://www.accuweather.com/en/bd/dhaka/28143/air-quality-index/28143")
         .then(response =>{
             const html = response.data
@@ -128,7 +128,7 @@ app.get('/pollutants',(req,res)=>{
         }).catch((error)=>console.log(error))
 })
 
- app.get('/hourlyweather', (req,res) =>{
+ app.get('/hourlyweather',async (req,res) =>{
     axios.get("https://www.accuweather.com/en/bd/dhaka/28143/hourly-weather-forecast/28143")
         .then(response =>{
             const html = response.data
@@ -205,9 +205,9 @@ app.get('/pollutants',(req,res)=>{
                 })
                
             })
-            
+            res.json(details)
         } ).catch((error)=>console.log(error))
-        return await res.json(details)
+        
 })
 
 app.listen(PORT,()=>{
