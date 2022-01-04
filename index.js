@@ -72,7 +72,7 @@ app.get('/weather',async(req,res)=>{
             console.log(error)
             
         })
-        return await res.json(information)
+       await res.json(information)
 })
 app.get('/currentairquality',async(req,res)=>{
     axios.get("https://www.accuweather.com/en/bd/dhaka/28143/air-quality-index/28143")
