@@ -3,7 +3,7 @@ const express = require('express')
 const axios = require('axios')
 const cheerio = require('cheerio')
 const cors=require('cors')
-const { response } = require('express')
+
 const information = []
 const details = []
 const app = express()
@@ -22,7 +22,7 @@ app.get('/',(req,res)=>{
 const address = "https://www.accuweather.com/en/bd/dhaka/28143/weather-forecast/28143"
 app.get('/weather',(req,res)=>{
     axios.get(address)
-        .then(response =>{
+        .then(async response =>{
             const html = response.data
             const $ = cheerio.load(html)
             const temp = $('.temp',html).text().slice(0,4)
@@ -35,7 +35,7 @@ app.get('/weather',(req,res)=>{
             
             deleteInfo(information)
         
-            information.push({
+            await information.push({
                     title,
                     temp,
                     time,
@@ -45,29 +45,29 @@ app.get('/weather',(req,res)=>{
                     date
                     
             })
-            $('.allergy').each((i)=>{
+            $('.allergy').each(async (i)=>{
                 const allergy_name = $('.allergy-name').eq(i).text()
                 const allergy_value = $('.allergy-value').eq(i).text()
                 const allergy_image = "https://www.accuweather.com"+$('.allergy-icon').eq(i).attr('src')
-                information.push({
+               await information.push({
                         allergy_name,
                         allergy_value,
                         allergy_image
                 }) 
             })
-            $('.weather-card').each((i)=>{
+            $('.weather-card').each(async (i)=>{
                 const cardtitle = $('.card-header').children('h2').eq(i).text().replace('\n\t\t\t','').replace('\n\t\t\t','')
                 const cardimage = "https://www.accuweather.com"+$('.forecast-container').children('.icon-weather').eq(i).attr('src')
                 const cardtemp = $('.temp-container').children('.temp').eq(i).text()
                 const cardtempphrase= $('.card-content').children('.phrase').eq(i).text()
-                information.push({
+                await information.push({
                     cardtitle,
                     cardimage,
                     cardtemp,
                     cardtempphrase
                 })
             })
-            res.json(information)
+            return await res.json(information)
         }).catch(error =>{
             console.log(error)
         })
@@ -128,7 +128,7 @@ app.get('/pollutants',(req,res)=>{
         }).catch((error)=>console.log(error))
 })
 
- app.get('/hourlyweather',(req,res) =>{
+ app.get('/hourlyweather', (req,res) =>{
     axios.get("https://www.accuweather.com/en/bd/dhaka/28143/hourly-weather-forecast/28143")
         .then(response =>{
             const html = response.data
@@ -171,10 +171,10 @@ app.get('/pollutants',(req,res)=>{
             })
             res.json(information)
     }).catch((error)=>console.log(error))
-   
+
  })
  
- app.get('/dailyweather',(req,res)=>{
+ app.get('/dailyweather',async (req,res)=>{
     axios.get("https://www.accuweather.com/en/bd/dhaka/28143/daily-weather-forecast/28143")
         .then(response =>{
             deleteInfo(details)
@@ -205,9 +205,9 @@ app.get('/pollutants',(req,res)=>{
                 })
                
             })
-            res.json(details)
+            
         } ).catch((error)=>console.log(error))
-      
+        return await res.json(details)
 })
 
 app.listen(PORT,()=>{
