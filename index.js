@@ -1,3 +1,4 @@
+const PORT = process.env.PORT  || 8000
 const express = require('express')
 const axios = require('axios')
 const cheerio = require('cheerio')
@@ -209,6 +210,6 @@ app.get('/pollutants',(req,res)=>{
       
 })
 
-app.listen('8000',()=>{
+app.listen(PORT,()=>{
     console.log('server running on Port 8000')
 })
