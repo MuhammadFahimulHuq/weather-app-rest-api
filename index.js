@@ -34,7 +34,7 @@ app.get('/sample',(req,res)=>{
 const address = "https://www.accuweather.com/en/bd/dhaka/28143/weather-forecast/28143"
 app.get('/weather',(req,res)=>{
     axios.get(address)
-        .then( response =>{
+        .then( (response) =>{
             const html = response.data
             const $ = cheerio.load(html)
             const temp = $('.temp',html).text().slice(0,4)
@@ -88,7 +88,7 @@ app.get('/weather',(req,res)=>{
 })
 function getCurrentAirQuality (req,res){
    axios.get("https://www.accuweather.com/en/bd/dhaka/28143/air-quality-index/28143")
-        .then(response =>{
+        .then((response) =>{
          
             const html = response.data
             const $ = cheerio.load(html)
@@ -117,7 +117,7 @@ app.get('/currentairquality',getCurrentAirQuality)
 
 app.get('/pollutants',(req,res)=>{
     axios.get("https://www.accuweather.com/en/bd/dhaka/28143/air-quality-index/28143")
-        .then(response =>{
+        .then((response) =>{
             const html = response.data
             const $ = cheerio.load(html)
 
@@ -152,7 +152,7 @@ app.get('/pollutants',(req,res)=>{
 
  app.get('/hourlyweather',(req,res) =>{
     axios.get("https://www.accuweather.com/en/bd/dhaka/28143/hourly-weather-forecast/28143")
-        .then(response =>{
+        .then((response) =>{
             const html = response.data
             const $ = cheerio.load(html)
             
@@ -198,7 +198,7 @@ app.get('/pollutants',(req,res)=>{
  
  app.get('/dailyweather',(req,res)=>{
     axios.get("https://www.accuweather.com/en/bd/dhaka/28143/daily-weather-forecast/28143")
-        .then(response =>{
+        .then((response) =>{
             
             const html = response.data
             const $ = cheerio.load(html)
