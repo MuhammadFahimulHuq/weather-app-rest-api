@@ -75,7 +75,8 @@ app.get('/weather',async(req,res)=>{
       
 })
 app.get('/currentairquality',async(req,res)=>{
-    axios.get("https://www.accuweather.com/en/bd/dhaka/28143/air-quality-index/28143")
+    try{
+        await axios.get("https://www.accuweather.com/en/bd/dhaka/28143/air-quality-index/28143")
         .then(async response =>{
             const html = response.data
             const $ = cheerio.load(html)
@@ -85,16 +86,20 @@ app.get('/currentairquality',async(req,res)=>{
             const aqstatement = $('.air-quality-data').children('.statement').eq(0).text().replace('\n\t\t\t\t\t','').replace('\n\t\t\t\t').replace('undefined','')
             
             deleteInfo(information)
-        information.push({
-           airqcondition,
+            information.push({
+            airqcondition,
             aqinum,
             aqstatement,
         
                  })
-                 res.json(information)
-    }).catch(error =>{
-        console.log(error)
-    })
+                return await res.json(information)
+                })
+            }
+            catch(err){
+            console.log(err)
+}
+    
+    
      
 })
 app.get('/pollutants',async(req,res)=>{
