@@ -21,6 +21,16 @@ const deleteInfo=(info) =>{
 app.get('/',(req,res)=>{
     res.json("Welcome to weather app")
 })
+app.get('/sample',(req,res)=>{
+    axios.get("https://www.accuweather.com/en/bd/dhaka/28143/weather-forecast/28143")
+        .then(response =>{
+            const html = response.data
+            const $ = cheerio.load(html)
+            const temp = $('.temp',html).text().slice(0,4)
+            res.json(temp)
+        }).catch=(error) => console.log(error)
+      
+})
 const address = "https://www.accuweather.com/en/bd/dhaka/28143/weather-forecast/28143"
 app.get('/weather',(req,res)=>{
     axios.get(address)
