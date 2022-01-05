@@ -1,13 +1,15 @@
 const PORT = process.env.PORT  || 8000
 const express = require('express')
-const axios = require('axios')
+const axios = require('axios').default
 const cheerio = require('cheerio')
+const responseTime = require('response-time')
 const cors=require('cors')
 
 const information = []
 const details = []
 const app = express()
 app.use(cors())
+app.use(responseTime())
 const deleteInfo=(info) =>{
     if(info){
         const len = info.length
@@ -74,10 +76,11 @@ app.get('/weather',async(req,res)=>{
         })
       
 })
-app.get('/currentairquality',async(req,res)=>{
+async function getCurrentAirQuality (req,res){
     try{
-        await axios.get("https://www.accuweather.com/en/bd/dhaka/28143/air-quality-index/28143")
-        .then(async response =>{
+       await axios.get("https://www.accuweather.com/en/bd/dhaka/28143/air-quality-index/28143")
+        .then(response =>{
+         
             const html = response.data
             const $ = cheerio.load(html)
       
@@ -92,16 +95,17 @@ app.get('/currentairquality',async(req,res)=>{
             aqstatement,
         
                  })
-                return await res.json(information)
+                 res.json(information)
                 })
             }
             catch(err){
             console.log(err)
 }
+}
     
-    
+app.get('/currentairquality',getCurrentAirQuality)    
      
-})
+
 app.get('/pollutants',async(req,res)=>{
     axios.get("https://www.accuweather.com/en/bd/dhaka/28143/air-quality-index/28143")
         .then(async response =>{
