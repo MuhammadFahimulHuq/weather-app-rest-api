@@ -2,14 +2,14 @@ const PORT = process.env.PORT  || 8000
 const express = require('express')
 const axios = require('axios')
 const cheerio = require('cheerio')
-const responseTime = require('response-time')
+
 const cors=require('cors')
 
 const information = []
 const details = []
 const app = express()
 app.use(cors())
-app.use(responseTime())
+
 const deleteInfo=(info) =>{
     if(info){
         const len = info.length
@@ -22,9 +22,9 @@ app.get('/',(req,res)=>{
     res.json("Welcome to weather app")
 })
 const address = "https://www.accuweather.com/en/bd/dhaka/28143/weather-forecast/28143"
-app.get('/weather',async(req,res)=>{
+app.get('/weather',(req,res)=>{
     axios.get(address)
-        .then(async response =>{
+        .then( response =>{
             const html = response.data
             const $ = cheerio.load(html)
             const temp = $('.temp',html).text().slice(0,4)
@@ -76,9 +76,8 @@ app.get('/weather',async(req,res)=>{
         })
       
 })
-async function getCurrentAirQuality (req,res){
-    try{
-       await axios.get("https://www.accuweather.com/en/bd/dhaka/28143/air-quality-index/28143")
+function getCurrentAirQuality (req,res){
+   axios.get("https://www.accuweather.com/en/bd/dhaka/28143/air-quality-index/28143")
         .then(response =>{
          
             const html = response.data
@@ -97,8 +96,8 @@ async function getCurrentAirQuality (req,res){
                  })
                  res.json(information)
                 })
-            }
-            catch(err){
+            
+            .catch=(err)=>{
             console.log(err)
 }
 }
@@ -106,9 +105,9 @@ async function getCurrentAirQuality (req,res){
 app.get('/currentairquality',getCurrentAirQuality)    
      
 
-app.get('/pollutants',async(req,res)=>{
+app.get('/pollutants',(req,res)=>{
     axios.get("https://www.accuweather.com/en/bd/dhaka/28143/air-quality-index/28143")
-        .then(async response =>{
+        .then(response =>{
             const html = response.data
             const $ = cheerio.load(html)
 
@@ -141,9 +140,9 @@ app.get('/pollutants',async(req,res)=>{
         
 })
 
- app.get('/hourlyweather',async (req,res) =>{
+ app.get('/hourlyweather',(req,res) =>{
     axios.get("https://www.accuweather.com/en/bd/dhaka/28143/hourly-weather-forecast/28143")
-        .then(async response =>{
+        .then(response =>{
             const html = response.data
             const $ = cheerio.load(html)
             
@@ -187,9 +186,9 @@ app.get('/pollutants',async(req,res)=>{
    
  })
  
- app.get('/dailyweather',async (req,res)=>{
+ app.get('/dailyweather',(req,res)=>{
     axios.get("https://www.accuweather.com/en/bd/dhaka/28143/daily-weather-forecast/28143")
-        .then(async response =>{
+        .then(response =>{
             
             const html = response.data
             const $ = cheerio.load(html)
