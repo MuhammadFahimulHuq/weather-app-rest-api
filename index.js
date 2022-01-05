@@ -87,7 +87,8 @@ app.get('/weather',(req,res)=>{
       
 })
 function getCurrentAirQuality (req,res){
-   axios.get("https://www.accuweather.com/en/bd/dhaka/28143/air-quality-index/28143")
+    try{
+        axios.get("https://www.accuweather.com/en/bd/dhaka/28143/air-quality-index/28143")
         .then((response) =>{
          
             const html = response.data
@@ -106,11 +107,14 @@ function getCurrentAirQuality (req,res){
                  })
                  res.json(information)
                 })
-            
-            .catch=(err)=>{
-            console.log(err)
+    }
+    catch{
+        console.log(error)
+    }
+   
+         
 }
-}
+
     
 app.get('/currentairquality',getCurrentAirQuality)    
      
@@ -233,5 +237,5 @@ app.get('/pollutants',(req,res)=>{
 })
 
 app.listen(PORT,()=>{
-    console.log('server running on Port 8000')
+    console.log(`server running on Port ${PORT}`)
 })
