@@ -22,7 +22,7 @@ app.get('/',(req,res)=>{
 const address = "https://www.accuweather.com/en/bd/dhaka/28143/weather-forecast/28143"
 app.get('/weather',async(req,res)=>{
     axios.get(address)
-        .then(response =>{
+        .then(async response =>{
             const html = response.data
             const $ = cheerio.load(html)
             const temp = $('.temp',html).text().slice(0,4)
@@ -45,7 +45,7 @@ app.get('/weather',async(req,res)=>{
                     date
                     
             })
-            $('.allergy').each(async(i)=>{
+            $('.allergy').each((i)=>{
                 const allergy_name = $('.allergy-name').eq(i).text()
                 const allergy_value = $('.allergy-value').eq(i).text()
                 const allergy_image = "https://www.accuweather.com"+$('.allergy-icon').eq(i).attr('src')
@@ -55,7 +55,7 @@ app.get('/weather',async(req,res)=>{
                         allergy_image
                 }) 
             })
-            $('.weather-card').each(async(i)=>{
+            $('.weather-card').each((i)=>{
                 const cardtitle = $('.card-header').children('h2').eq(i).text().replace('\n\t\t\t','').replace('\n\t\t\t','')
                 const cardimage = "https://www.accuweather.com"+$('.forecast-container').children('.icon-weather').eq(i).attr('src')
                 const cardtemp = $('.temp-container').children('.temp').eq(i).text()
@@ -67,16 +67,16 @@ app.get('/weather',async(req,res)=>{
                     cardtempphrase
                 })
             })
-         
+            res.json(information)
         }).catch(error =>{
             console.log(error)
             
         })
-       await res.json(information)
+      
 })
 app.get('/currentairquality',async(req,res)=>{
     axios.get("https://www.accuweather.com/en/bd/dhaka/28143/air-quality-index/28143")
-        .then(response =>{
+        .then(async response =>{
             const html = response.data
             const $ = cheerio.load(html)
       
@@ -91,15 +91,15 @@ app.get('/currentairquality',async(req,res)=>{
             aqstatement,
         
                  })
-        
+                 res.json(information)
     }).catch(error =>{
         console.log(error)
     })
-    return await res.json(information)
+     
 })
 app.get('/pollutants',async(req,res)=>{
     axios.get("https://www.accuweather.com/en/bd/dhaka/28143/air-quality-index/28143")
-        .then(response =>{
+        .then(async response =>{
             const html = response.data
             const $ = cheerio.load(html)
 
@@ -126,15 +126,15 @@ app.get('/pollutants',async(req,res)=>{
                 })
      
             })
-      
+            res.json(information)
            
         }).catch((error)=>console.log(error))
-        return await res.json(information)
+        
 })
 
  app.get('/hourlyweather',async (req,res) =>{
     axios.get("https://www.accuweather.com/en/bd/dhaka/28143/hourly-weather-forecast/28143")
-        .then(response =>{
+        .then(async response =>{
             const html = response.data
             const $ = cheerio.load(html)
             
@@ -173,14 +173,14 @@ app.get('/pollutants',async(req,res)=>{
 
                 })
             })
-            
+            res.json(information)
     }).catch((error)=>console.log(error))
-    return await res.json(information)
+   
  })
  
  app.get('/dailyweather',async (req,res)=>{
     axios.get("https://www.accuweather.com/en/bd/dhaka/28143/daily-weather-forecast/28143")
-        .then(response =>{
+        .then(async response =>{
             
             const html = response.data
             const $ = cheerio.load(html)
@@ -209,9 +209,9 @@ app.get('/pollutants',async(req,res)=>{
                 })
                
             })
-           
+            res.json(details)
         } ).catch((error)=>console.log(error))
-        return await res.json(details)
+ 
 })
 
 app.listen(PORT,()=>{
