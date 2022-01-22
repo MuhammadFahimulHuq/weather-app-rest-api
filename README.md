@@ -1,6 +1,6 @@
 # weather-app
 A rest api that uses web scraping from "https://www.accuweather.com" that fetches dhaka's weather update.
-# ![#f03c15]Disclamer 
+# ![#f03c15](Disclamer) 
 This project is just for learning and demonstration purpuse. Do not use this api on production. Accuweather provide their own api.
 # End-points
 - "/"
