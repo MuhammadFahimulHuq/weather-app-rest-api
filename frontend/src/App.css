@@ -1,0 +1,215 @@
+body{
+  font-family: 'Abel', sans-serif;
+  margin: 0%;
+  padding: 0%;
+  background-color: rgba(255, 247, 247, 0.192)
+}
+#container{
+    display:grid;
+    height:100vh;
+    grid-template-columns: 1fr 1fr 1fr .5fr .5fr;
+    grid-template-rows: 0.1fr 1.5fr 0.3fr;
+    grid-template-areas: '. nv nv cl '
+    '. mn mn .'
+    '. ft ft .';
+    gap: 5px;
+}
+.navbar{
+
+  grid-area: nv;
+  
+}
+.items{
+
+  grid-area:mn;
+}
+.footer{
+
+  grid-area:ft;
+}
+.clock{
+
+ grid-area:cl;
+}
+.clock-container{
+  margin-left: 7%;
+}
+.box{
+  display: flex;
+
+}
+.link-box{
+  margin-left: auto;
+  order: 2;
+  margin-top: 10%;
+
+  width: 30vh;
+}
+
+.link{
+  text-decoration: none;
+  color: black;
+  font-size: larger;
+  cursor: pointer;
+  margin: 2%;
+}
+.link:hover{
+  color: rgb(145, 204, 255);
+  border-bottom: 2px solid rgb(255, 226, 172);
+}
+.link-style{
+  color: rgb(24, 147, 255);
+  font-weight: 700;
+  border-bottom: 2px solid rgb(255, 226, 172);
+}
+.celcius-box{
+  display: flex;
+  padding: 20px;
+  width: 40vh;
+  justify-content: space-evenly;
+}
+main{
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  
+}
+.small-card-temp{
+  font-size: 2rem;
+}
+.temp-phrase{
+  font-size: 1.75rem;
+  margin-top: 50px;
+}
+.celcius{
+  font-size: 20px;
+  color: gray;
+}
+.celcius-box-temp{
+  width: 40%;
+}
+.temp{
+  font-size: 3rem;
+}
+.air-quality-logo-text{
+  display: flex;
+  background-color: white;
+
+
+}
+.air-quality-box{
+
+  width: 50vh;
+  
+}
+.allergy-item-box{
+display: flex;
+justify-content: space-between;
+}
+.allergy-box{
+
+  width: 50vh;
+ 
+}
+.air-quality-smallcard-title{
+  border-left:3px solid rgb(255, 117, 92);
+  padding-left: 10px;
+}
+.air-allergy-box{
+  display: flex;
+  justify-content: center;
+  grid-area: aq;
+  background-color: white;
+  padding: 15px;
+  margin-top: 15px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.card-title{
+  border-left: 2px solid rgb(241, 125, 252);
+  padding-left: 5px;
+}
+#air-container{
+  display: grid;
+  
+  grid-template-columns: 1fr ;
+  grid-template-rows: 0.5fr;
+  grid-template-areas: 'aq';
+
+ 
+}
+.card-item-box{
+ flex: 0 1 50%;
+
+ margin: 2px auto;
+}
+#quality-container{
+  display: flex;
+  flex-wrap: wrap;
+  background-color: white;
+ box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+ margin-top: 15px;
+
+}
+
+.read-or-hide{
+  color: rgb(0, 30, 54);
+  font-weight: 1000;
+  cursor: pointer;
+}
+.text{
+  display: inline;
+  width: 100%;
+}
+.daily-weather-card{
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  align-items: center;
+  margin: 15px auto;
+  height: 10vh;
+  padding: 15px;
+}
+#hourly-container{
+ background-color: white;
+ box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+ margin: 10px;
+ padding:20px;
+}
+.hourly-table{
+
+}
+.date-container{
+
+}
+
+.date-time-box{
+  width: 20%;
+}
+#hourly-container{
+  display: flex;
+
+
+}
+.tag{
+  text-decoration: none;
+
+
+}
+ul{
+  list-style-type: none;
+  width: 30%;
+  line-height: 2;
+}
+
+#celcius-box{
+ width: 30%;
+}
+
+.header{
+  
+  border-left:3px solid blue;
+  padding-left:10px;
+}
