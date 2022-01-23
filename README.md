@@ -17,7 +17,7 @@ This project is just for learning and demonstration purpuse. Do not use this api
 - npm install
 - npm start
 On Port: 8000
-# Sample Image for api.
+# Sample Image of the api.
 ![](/images/2022-01-22_202439.png)
 ![](/images/2022-01-22_202531.png)
 ![](/images/2022-01-22_202619.png)
